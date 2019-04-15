@@ -1,7 +1,7 @@
 import {
   Component
 } from '@angular/core';
-import { tick } from '@angular/core/src/render3/instructions';
+import {FormsModule} from '@angular/forms'
 
 
 @Component({
@@ -9,76 +9,68 @@ import { tick } from '@angular/core/src/render3/instructions';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+
+
 export class AppComponent {
 
-  deImage: string;
-  deMessage: string;
-  userInput: '';
-
-clearFields(){
-  this.deImage = null;
-  this.deMessage = null
-  }
+  displayMessage = this.displayMessage;
+  gameImage = this.gameImage;
 
 
-  onSubmit(userInput)
-  {
-   // this.clearFields()
-
-    try{
-    this.deMessage =   this.getAiResponse(userInput).display
-    this.deImage =  this.getAiResponse(userInput).gameImage
-
-    }
-    catch(error){
-      console.log(error)
-    }
-
-  }
-
-
-  getAiResponse = function getAiResponse(userInput) {
-
-    let gameElements = ['rock', 'paper', 'scissors']
-
-    let displayElements = {
-      gameImage: 'string',
-      display: 'string'
-    }
-
-    let gameChoice = gameElements[Math.floor(Math.random() * gameElements.length)]
-
-    switch (gameChoice) {
-
-      case 'rock':
+    onSubmit(userInput)
       {
-        displayElements.gameImage = '../assets/images/rock.jpg';
 
-        (gameChoice === userInput ? displayElements.display = 'draw!': userInput === 'paper' ? displayElements.display = 'You Win!' : displayElements.display = "You Lose!")
-            break;
-        }
+    let gameImage = '';
+    let displayMessage = '';
+    var myRPSarray = ['rock','paper','scissors'];
 
-      case 'paper':
-      {
-        displayElements.gameImage = '../assets/images/paper.png';
+    var randomRPS = myRPSarray[Math.floor(Math.random() * myRPSarray.length)].toString();
 
-        (gameChoice === userInput ? displayElements.display = 'draw!': userInput === 'rock' ? displayElements.display = 'You Lose!' : displayElements.display = "You Win!")
+    switch(randomRPS)
+        {
+        case 'rock':
+          gameImage = '../assets/images/marioRock.png';
+        (
+          userInput === randomRPS ? displayMessage = 'draw!'
+          :
+          userInput === 'paper' ? displayMessage = 'You Win!'
+          :
+         displayMessage = 'You Lose!'
+        )
+        break;
+        case 'paper':
+         gameImage = '../assets/images/marioPaper.png';
+        (
+          userInput === randomRPS ? displayMessage = 'draw!'
+          :
+          userInput === 'rock' ? displayMessage = 'You Lose!'
+          :
+          displayMessage = 'You Win!'
+        )
+        break;
+        case 'scissors':
+        gameImage = '../assets/images/marioscissors.png';
+        (
+          userInput === randomRPS ? displayMessage = 'draw!'
+          :
+          userInput === 'rock' ? displayMessage = 'You Win!'
+          :
+          displayMessage = 'You Lose!'
+        )
         break;
       }
-
-      case 'scissors':
-      {
-        displayElements.gameImage = '../assets/images/scissors.jpg';
-
-        (gameChoice === userInput ? displayElements.display = 'draw!': userInput === 'rock' ? displayElements.display = 'You Win!' : displayElements.display = "You Lose!")
-
-      break;
-      }
-    }
-    return displayElements;
-  };
-
-
-
+      this.gameImage = gameImage;
+      this.displayMessage = displayMessage;
+      console.log(userInput)
+      console.log(displayMessage)
+      console.log(gameImage)
+}
 
 }
+
+
+
+
+
+
